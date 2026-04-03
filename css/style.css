@@ -1,0 +1,403 @@
+/* ---------- MINIMALIST DESIGN SYSTEM (GREY & WHITISH) ---------- */
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-card: rgba(24, 24, 24, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-main: #f0f0f0;
+  --text-dim: #9ca3af;
+  --accent: #ffffff;
+  --border-subtle: #262626;
+  --transition-snappy: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  min-height: 100vh;
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--text-main);
+  color: var(--bg-dark);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Header & Nav ---------- */
+.site-header {
+  text-align: center;
+  padding: 5rem 0 3rem;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: var(--accent);
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  text-transform: lowercase;
+  transition: var(--transition-smooth);
+}
+
+.logo:hover {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.tagline {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 3.5rem;
+  margin-top: 3rem;
+}
+
+.nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-snappy);
+  padding: 0.5rem 0;
+}
+
+.nav a:hover, .nav a.active {
+  color: var(--accent);
+}
+
+/* ---------- Blog Cards (Minimalist) ---------- */
+.posts-grid {
+  display: grid;
+  gap: 1rem; /* Tighter minimalist grid */
+}
+
+.post-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 3rem;
+  transition: var(--transition-smooth);
+  animation: slideUp 0.6s ease backwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.post-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-6px);
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.post-title h2 {
+  font-size: 1.7rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.post-title a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.post-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.post-excerpt {
+  color: #c0c0c0;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #252525;
+  color: #ccc;
+  padding: 0.2rem 0.8rem;
+  border-radius: 4px; /* Subtle minimalist corners */
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ---------- Full Post ---------- */
+.post-full {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 5rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.post-full h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.post-content {
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  color: #d1d5db;
+}
+
+.post-content h2 {
+  margin: 3rem 0 1rem;
+  color: var(--accent);
+  font-size: 1.8rem;
+  letter-spacing: -0.5px;
+}
+
+.post-content pre {
+  background: #050505;
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  margin: 3rem 0;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* Inline Code for About Page/Content */
+code.inline-code {
+  background: rgba(255,255,255,0.05);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+  color: var(--accent);
+}
+
+.back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.back-home:hover {
+  color: var(--accent);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 8rem;
+  padding: 4rem 0;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.footer p {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- Components & Utilities ---------- */
+.section-title {
+  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  opacity: 0.9;
+  letter-spacing: -0.5px;
+}
+
+.browse-all-container {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.browse-all-link {
+  color: var(--text-dim);
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-snappy);
+}
+
+.browse-all-link:hover {
+  color: var(--accent);
+}
+
+/* ---------- Utilities ---------- */
+.search-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition-snappy);
+}
+
+/* ---------- Tag Filtering Bar ---------- */
+.tag-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.tag-filter-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-dim);
+  padding: 0.4rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition-snappy);
+}
+
+.tag-filter-btn:hover, .tag-filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.hidden { display: none !important; }
+
+/* ---------- "Grok-like" Background Canvas ---------- */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none; /* Let clicks pass through to content */
+  background: var(--bg-dark);
+}
+
+/* Transitions (Keep fadeIn for container-level animations) */
+/* Post Image Styling */
+.post-image-container {
+  margin: 2.5rem auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-card);
+  max-width: 350px; /* Further reduced for a compact, mobile-like appearance */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  margin: 3.5rem auto;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.post-image-caption {
+  padding: 1rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .post-full { padding: 2rem; }
+  .post-full h1 { font-size: 2rem; }
+  .logo { font-size: 1.8rem; }
+  .nav { gap: 2rem; }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About the researcher behind k1chuu">
+    <title>k1chuu | About</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&family=Fira+Code&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo" id="site-logo">k1chuu</div>
+            <div class="tagline" id="site-tagline">Just a random guy from the cloud</div>
+            <nav class="nav">
+                <a href="../">Home</a>
+                <a href="../blog/">Blog Archive</a>
+                <a href="./" class="active">About</a>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <article class="post-full">
+                <a href="../" class="back-home">← Back to Home</a>
+
+                <h1>About k1chuu</h1>
+
+                <div class="post-content">
+                    <p>
+                        I am a security researcher focused on low-level exploitation,
+                        kernel security, and vulnerability discovery. This blog serves as a repository for documenting 
+                        deep dives into research, technical analysis, and the underlying systems internals.
+                    </p>
+
+                    <h2 style="margin-top:3rem">🔍 Research Focus</h2>
+                    <ul style="margin:1rem 0 1rem 1.5rem; line-height:2">
+                        <li>Heap exploitation & memory corruption primitives</li>
+                        <li>Linux kernel attack surfaces & privilege escalation</li>
+                        <li>Fuzzing methodologies & binary analysis automation</li>
+                        <li>CTF challenge development & solution analysis</li>
+                    </ul>
+
+                    <h2 style="margin-top:3rem">🛠️ Tooling & Stack</h2>
+                    <p>
+                        Most research is conducted using: <code class="inline-code">GDB/Pwndbg</code>,
+                        <code class="inline-code">QEMU</code>,
+                        <code class="inline-code">AFL++</code>,
+                        and custom Python/C tooling. The blog is statically generated for speed & simplicity.
+                    </p>
+
+                    <h2 style="margin-top:3rem">📬 Contact & Collaboration</h2>
+                    <p>
+                        For research inquiries, vulnerability disclosures, or potential collaboration:
+                    </p>
+                    <ul style="margin:1rem 0 0 1.5rem; line-height:2">
+                        <li>💬 Find me on security community Discord servers as <code class="inline-code">k1chuu</code></li>
+                        <li>📧 For disclosure inquiries: <code class="inline-code">research@k1chuu.dev</code></li>
+                    </ul>
+
+                    <div style="margin-top:4rem; padding-top:2rem; border-top:1px solid var(--border-subtle)">
+                        <p style="color:var(--text-dim); font-size:0.9rem">
+                            <em>All content is for educational purposes. Exploits are tested in isolated environments
+                                only. Responsible disclosure is always preferred and prioritized.</em>
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer class="footer">
+            <p>© 2026 k1chuu</p>
+        </footer>
+    </div>
+    <script src="../js/background.js"></script>
+</body>
+
+</html>

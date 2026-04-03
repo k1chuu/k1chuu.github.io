@@ -1,0 +1,24 @@
+{
+  "site": {
+    "title": "k1chuu | Security Researcher",
+    "logo": "k1chuu",
+    "tagline": "Just a random guy from the cloud"
+  },
+  "author": {
+    "name": "k1chuu",
+    "bio": "Security Researcher & Developer. Focused on low-level research, social engineering analysis, and minimalist design."
+  },
+  "posts": [
+    {
+      "id": "fake-courier-app",
+      "title": "A Fake Courier App Almost Compromised My Friend’s PhonePe",
+      "date": "2026-02-13",
+      "readTime": "5 min read",
+      "tags": [
+        "tutorials",
+        "social-engineering"
+      ],
+      "excerpt": "A deep-dive into a mobile phishing campaign involving a fake courier app and PhonePe credential theft."
+    }
+  ]
+}

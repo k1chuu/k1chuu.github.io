@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mobile phishing case study: Fake courier app and PhonePe theft">
+  <title>A Fake Courier App Almost Compromised My Friend’s PhonePe | k1chuu</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&family=Fira+Code&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="container">
+    <header class="site-header">
+      <div class="logo" id="site-logo">k1chuu</div>
+      <div class="tagline" id="site-tagline">Just a random guy from the cloud</div>
+      <nav class="nav">
+        <a href="../../">Home</a>
+        <a href="../../blog/">Blog Archive</a>
+        <a href="../../about/">About</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <article class="post-full">
+        <a href="../../" class="back-home">← Back to Home</a>
+
+        <h1>A Fake Courier App Almost Compromised My Friend’s PhonePe</h1>
+
+        <div class="post-meta" style="margin-bottom:2.5rem">
+          <time datetime="2026-02-13">Feb 13, 2026</time>
+          <span>•</span>
+          <span>5 min read</span>
+          <span>•</span>
+          <span>by k1chuu</span>
+        </div>
+
+        <div class="post-content">
+          <p>A few weeks ago, a senior friend called me in panic. Her phone was sending SMS messages automatically to
+            unknown numbers. On top of that, her PhonePe account suddenly logged out, and she was worried someone had
+            logged into her account from another phone.</p>
+
+          <p>Here’s what happened.</p>
+
+          <p>She received a WhatsApp message from an unknown person claiming to be from a courier service. Since she had
+            missed a delivery earlier, she trusted the message and installed the app from the link they sent. The app
+            wasn’t from the Play Store.</p>
+
+          <div class="post-image-container">
+            <img src="/posts/assets/phishing_whatsapp.jpg" alt="Phishing APK via WhatsApp" class="post-image"
+              width="350" loading="lazy">
+            <div class="post-image-caption">
+              Fig 1. The malicious APK file distributed via a fake WhatsApp customer support account.
+            </div>
+          </div>
+
+          <p>After installing it, she logged into PhonePe inside the app. Soon after, the app disappeared from her home
+            screen, her phone started sending SMS automatically, and her PhonePe logged out. That’s when she realized
+            something was wrong.</p>
+
+          <div class="post-image-container">
+            <img src="/posts/assets/phishing_app_ui.jpg" alt="Fake Support App UI" class="post-image" width="350"
+              loading="lazy">
+            <div class="post-image-caption">
+              Fig 2. The phishing interface designed to look like a legitimate customer support ticketing system.
+            </div>
+          </div>
+
+          <p>I connected her phone using ADB and found a hidden, unknown app running in the background. After removing
+            it, the strange SMS activity stopped.</p>
+
+          <div class="post-image-container">
+            <img src="/posts/assets/phishing_sms_otp.jpg" alt="SMS Phishing Logs" class="post-image" width="350"
+              loading="lazy">
+            <div class="post-image-caption">
+              Fig 3. SMS logs showing the attacker triggering OTPs to gain remote control over financial accounts.
+            </div>
+          </div>
+
+
+          <p>This was a classic mobile phishing attack:</p>
+
+          <ul>
+            <li>Social engineering using a fake courier story</li>
+            <li>A malicious app sent via WhatsApp</li>
+            <li>A fake login screen to steal PhonePe credentials</li>
+            <li>Hidden app behavior to avoid detection</li>
+          </ul>
+
+          <h2>What We Learned</h2>
+
+          <ul>
+            <li>Never install apps from WhatsApp or SMS links</li>
+            <li>Always verify courier messages using official apps or websites</li>
+            <li>Don’t log into financial apps through third-party links</li>
+            <li>If an app hides itself, assume it’s malicious</li>
+            <li>Enable transaction alerts and Play Protect</li>
+          </ul>
+        </div>
+
+        <div class="post-tags" style="margin-top:3rem">
+          <span class="tag">tutorials</span>
+          <span class="tag">social-engineering</span>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 k1chuu</p>
+    </footer>
+  </div>
+  <script src="../../js/background.js"></script>
+</body>
+
+</html>
