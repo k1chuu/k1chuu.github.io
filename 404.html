@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting…</title>
+    <script>
+        // Store the originally requested path in sessionStorage
+        // GitHub Pages sets the path in: window.location.pathname
+        // Redirect to index.html with a flag
+        sessionStorage.setItem('redirect', window.location.pathname);
+        window.location.replace('/');
+    </script>
+</head>
+
+<body>
+    Redirecting…
+</body>
+
+</html>
