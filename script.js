@@ -7,32 +7,32 @@
   const yearSpan = document.getElementById('year');
 
   let config = {};
-  let postsData = [];
+  let postsData = [];          // all posts (sorted newest first)
   let activeTag = null;
 
   const converter = new showdown.Converter({ metadata: true, tables: true });
 
   // ---------- Initialisation ----------
   try {
-    const res = await fetch('./config.json');
+    const res = await fetch('/config.json');   // absolute
     if (!res.ok) throw new Error('config.json not found');
     config = await res.json();
     postsData = config.posts || [];
     postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
     applyConfigSettings();
 
-    // Check if we came from a 404 redirect (sessionStorage)
+    // If we arrived from a 404 redirect, restore the original path
     const redirectPath = sessionStorage.getItem('redirect');
     if (redirectPath) {
       sessionStorage.removeItem('redirect');
-      // Use replaceState to update the URL without a reload
+      // Update the browser URL without a reload
       history.replaceState(null, '', redirectPath);
     }
 
-    // Handle initial route
+    // Handle the current URL
     handleRoute(window.location.pathname);
 
-    // Listen for back/forward navigation
+    // Listen for browser back/forward
     window.addEventListener('popstate', () => handleRoute(window.location.pathname));
   } catch (err) {
     app.innerHTML = `<div class="error">Failed to load site. ${err.message}</div>`;
@@ -41,54 +41,32 @@
 
   navToggle.addEventListener('click', () => siteNav.classList.toggle('open'));
 
-  // ---------- Route to the correct page ----------
-  function handleRoute(path) {
-    updateActiveNav(path);
-    if (siteNav.classList.contains('open')) siteNav.classList.remove('open');
-
-    // Post page: /post/slug
-    if (path.startsWith('/post/')) {
-      const slug = path.replace('/post/', '');
-      renderSinglePost(slug);
-    }
-    // Blog page: /blog
-    else if (path === '/blog') {
-      // Parse ?tag= if present
-      const params = new URLSearchParams(window.location.search);
-      activeTag = params.get('tag') || null;
-      renderBlogPage();
-    }
-    // About page: /about
-    else if (path === '/about') {
-      renderAboutPage();
-    }
-    // Home: / (or empty)
-    else {
-      renderHomePage();
-    }
-  }
-
-  // ---------- Navigation helper (use pushState) ----------
+  // ---------- Navigate with pushState (clean URLs) ----------
   function navigateTo(url) {
     history.pushState(null, '', url);
     handleRoute(new URL(url, window.location.origin).pathname);
   }
 
-  // ---------- Attach navigation to all internal links ----------
-  function attachNavigateListeners(selector) {
-    document.querySelectorAll(selector).forEach(link => {
-      link.addEventListener('click', (e) => {
-        // Only handle internal links (same origin)
-        const href = link.getAttribute('href');
-        if (href && href.startsWith('/')) {
-          e.preventDefault();
-          navigateTo(href);
-        }
-      });
-    });
+  // ---------- Determine which page to render ----------
+  function handleRoute(path) {
+    updateActiveNav(path);
+    if (siteNav.classList.contains('open')) siteNav.classList.remove('open');
+
+    if (path.startsWith('/post/')) {
+      const slug = path.replace('/post/', '');
+      renderSinglePost(slug);
+    } else if (path === '/blog') {
+      const params = new URLSearchParams(window.location.search);
+      activeTag = params.get('tag') || null;
+      renderBlogPage();
+    } else if (path === '/about') {
+      renderAboutPage();
+    } else {
+      renderHomePage();   // everything else goes home
+    }
   }
 
-  // ---------- Apply static config ----------
+  // ---------- Site config (title, footer, accent) ----------
   function applyConfigSettings() {
     document.title = config.blogTitle;
     footerAuthor.textContent = config.authorName;
@@ -98,7 +76,6 @@
     }
   }
 
-  // ---------- Active link highlight ----------
   function updateActiveNav(currentPath) {
     navLinks.forEach(link => {
       const href = link.getAttribute('href');
@@ -106,7 +83,7 @@
     });
   }
 
-  // ---------- Home page (recent 5) ----------
+  // ---------- Home page (5 recent posts) ----------
   function renderHomePage() {
     const recentPosts = postsData.slice(0, 5);
     if (!recentPosts.length) {
@@ -123,7 +100,7 @@
     attachNavigateListeners('.view-all-link');
   }
 
-  // ---------- Blog page (all posts + filter) ----------
+  // ---------- Blog page (all posts + search + filter) ----------
   function renderBlogPage() {
     const allTags = [...new Set(postsData.flatMap(p => p.tags))];
     const filterBarHTML = `
@@ -167,14 +144,16 @@
     };
 
     searchInput.addEventListener('input', applyFiltersAndRender);
+
     tagButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const tag = btn.dataset.tag;
         activeTag = (activeTag === tag) ? null : tag;
-        // Update URL query without reload
         const url = activeTag ? `/blog?tag=${encodeURIComponent(activeTag)}` : '/blog';
-        history.replaceState(null, '', url);
-        document.querySelectorAll('.tag-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
+        history.replaceState(null, '', url);       // update URL without reload
+        document.querySelectorAll('.tag-btn').forEach(b =>
+          b.classList.toggle('active', b.dataset.tag === activeTag)
+        );
         applyFiltersAndRender();
       });
     });
@@ -182,7 +161,7 @@
     applyFiltersAndRender();
   }
 
-  // ---------- Single post ----------
+  // ---------- Single post page ----------
   async function renderSinglePost(slug) {
     const postMeta = postsData.find(p => p.slug === slug);
     if (!postMeta) {
@@ -191,7 +170,8 @@
     }
     app.innerHTML = '<div class="loading">Loading case file…</div>';
     try {
-      const mdRes = await fetch(`./posts/${slug}.md`);
+      // FIXED: absolute path
+      const mdRes = await fetch(`/posts/${slug}.md`);
       if (!mdRes.ok) throw new Error('Failed to load post content');
       const mdText = await mdRes.text();
       const htmlContent = converter.makeHtml(mdText);
@@ -222,7 +202,8 @@
   async function renderAboutPage() {
     app.innerHTML = '<div class="loading">Loading dossier…</div>';
     try {
-      const res = await fetch('./posts/about.md');
+      // FIXED: absolute path
+      const res = await fetch('/posts/about.md');
       if (!res.ok) throw new Error('about.md not found');
       const mdText = await res.text();
       const htmlContent = converter.makeHtml(mdText);
@@ -240,7 +221,9 @@
 
   // ---------- Post card HTML ----------
   function renderPostCard(post) {
-    const dateFormatted = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const dateFormatted = new Date(post.date).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
     const tagsHTML = (post.tags || []).map(tag => `<span class="card-tag" data-tag="${tag}">${tag}</span>`).join('');
     return `
       <article class="post-card" data-slug="${post.slug}">
@@ -255,18 +238,18 @@
     `;
   }
 
-  // ---------- Card click listeners ----------
+  // ---------- Click handlers for cards and tags ----------
   function attachPostCardListeners() {
-    // Whole card click → go to post
+    // Whole card click → /post/slug
     document.querySelectorAll('.post-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        if (e.target.classList.contains('card-tag')) return; // tag click separate
+        if (e.target.classList.contains('card-tag')) return;
         const slug = card.dataset.slug;
         navigateTo(`/post/${slug}`);
       });
     });
 
-    // Tag click → blog with filter
+    // Tag click → /blog?tag=...
     document.querySelectorAll('.card-tag').forEach(tag => {
       tag.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -276,14 +259,25 @@
     });
   }
 
-  // ---------- Close mobile nav on outside click ----------
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.site-nav') && !e.target.closest('.nav-toggle') && siteNav.classList.contains('open')) {
-      siteNav.classList.remove('open');
-    }
+  // ---------- Helper to attach pushState navigation to generic links ----------
+  function attachNavigateListeners(selector) {
+    document.querySelectorAll(selector).forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('/')) {
+          e.preventDefault();
+          navigateTo(href);
+        }
+      });
+    });
+  }
+
+  // ---------- Attach navigation to header elements ----------
+  document.querySelector('.site-logo').addEventListener('click', (e) => {
+    e.preventDefault();
+    navigateTo('/');
   });
 
-  // Attach nav link clicks (so they use pushState)
   document.querySelectorAll('.site-nav a').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -292,9 +286,10 @@
     });
   });
 
-  // Also the logo link
-  document.querySelector('.site-logo').addEventListener('click', (e) => {
-    e.preventDefault();
-    navigateTo('/');
+  // ---------- Close mobile nav on outside click ----------
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.site-nav') && !e.target.closest('.nav-toggle') && siteNav.classList.contains('open')) {
+      siteNav.classList.remove('open');
+    }
   });
 })();
