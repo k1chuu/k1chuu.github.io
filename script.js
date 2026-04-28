@@ -25,7 +25,6 @@
     const redirectPath = sessionStorage.getItem('redirect');
     if (redirectPath) {
       sessionStorage.removeItem('redirect');
-      // Update the browser URL without a reload
       history.replaceState(null, '', redirectPath);
     }
 
@@ -83,16 +82,16 @@
     });
   }
 
-  // ---------- Home page (5 recent posts) ----------
+  // ---------- Home page (5 recent logs) ----------
   function renderHomePage() {
     const recentPosts = postsData.slice(0, 5);
     if (!recentPosts.length) {
-      app.innerHTML = '<div class="empty-message">No cases yet. The streets are quiet.</div>';
+      app.innerHTML = '<div class="empty-message">No logs yet. The streets are quiet.</div>';
       return;
     }
     const postsHTML = recentPosts.map(post => renderPostCard(post)).join('');
     app.innerHTML = `
-      <h2 style="font-family:var(--font-heading); font-weight:400; margin-bottom:2rem;">Recent Case Files</h2>
+      <h2 style="font-family:var(--font-heading); font-weight:400; margin-bottom:2rem;">Recent Log Files</h2>
       <div class="post-list">${postsHTML}</div>
       <a href="/blog" class="back-button view-all-link" style="margin-top:1.5rem;">View All Log Files →</a>
     `;
@@ -100,12 +99,12 @@
     attachNavigateListeners('.view-all-link');
   }
 
-  // ---------- Blog page (all posts + search + filter) ----------
+  // ---------- Blog page (all logs + search + filter) ----------
   function renderBlogPage() {
     const allTags = [...new Set(postsData.flatMap(p => p.tags))];
     const filterBarHTML = `
       <div class="filter-bar">
-        <input type="search" id="post-search" class="search-bar" placeholder="Search case files..." value="">
+        <input type="search" id="post-search" class="search-bar" placeholder="Search log files..." value="">
         <div class="tag-filters">
           ${allTags.map(tag => `<button class="tag-btn" data-tag="${tag}">${tag}</button>`).join('')}
         </div>
@@ -113,7 +112,7 @@
       <div id="results-info" class="results-info"></div>
     `;
     app.innerHTML = `
-      <h2 style="font-family:var(--font-heading); font-weight:400; margin-bottom:1rem;">All Case Files</h2>
+      <h2 style="font-family:var(--font-heading); font-weight:400; margin-bottom:1rem;">All Log Files</h2>
       ${filterBarHTML}
       <div id="post-list-container"></div>
     `;
@@ -135,8 +134,8 @@
         return true;
       });
       resultsInfo.textContent = filtered.length === 0
-        ? 'No cases match your search.'
-        : `Found ${filtered.length} case${filtered.length !== 1 ? 's' : ''}.`;
+        ? 'No logs match your search.'
+        : `Found ${filtered.length} log${filtered.length !== 1 ? 's' : ''}.`;
       postListContainer.innerHTML = filtered.length === 0
         ? ''
         : `<div class="post-list">${filtered.map(post => renderPostCard(post)).join('')}</div>`;
@@ -150,7 +149,7 @@
         const tag = btn.dataset.tag;
         activeTag = (activeTag === tag) ? null : tag;
         const url = activeTag ? `/blog?tag=${encodeURIComponent(activeTag)}` : '/blog';
-        history.replaceState(null, '', url);       // update URL without reload
+        history.replaceState(null, '', url);
         document.querySelectorAll('.tag-btn').forEach(b =>
           b.classList.toggle('active', b.dataset.tag === activeTag)
         );
@@ -168,9 +167,8 @@
       app.innerHTML = '<div class="error">Post not found.</div>';
       return;
     }
-    app.innerHTML = '<div class="loading">Loading case file…</div>';
+    app.innerHTML = '<div class="loading">Loading log file…</div>';
     try {
-      // FIXED: absolute path
       const mdRes = await fetch(`/posts/${slug}.md`);
       if (!mdRes.ok) throw new Error('Failed to load post content');
       const mdText = await mdRes.text();
@@ -202,7 +200,6 @@
   async function renderAboutPage() {
     app.innerHTML = '<div class="loading">Loading dossier…</div>';
     try {
-      // FIXED: absolute path
       const res = await fetch('/posts/about.md');
       if (!res.ok) throw new Error('about.md not found');
       const mdText = await res.text();
@@ -240,7 +237,6 @@
 
   // ---------- Click handlers for cards and tags ----------
   function attachPostCardListeners() {
-    // Whole card click → /post/slug
     document.querySelectorAll('.post-card').forEach(card => {
       card.addEventListener('click', (e) => {
         if (e.target.classList.contains('card-tag')) return;
@@ -249,7 +245,6 @@
       });
     });
 
-    // Tag click → /blog?tag=...
     document.querySelectorAll('.card-tag').forEach(tag => {
       tag.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -259,7 +254,6 @@
     });
   }
 
-  // ---------- Helper to attach pushState navigation to generic links ----------
   function attachNavigateListeners(selector) {
     document.querySelectorAll(selector).forEach(link => {
       link.addEventListener('click', (e) => {
@@ -272,7 +266,7 @@
     });
   }
 
-  // ---------- Attach navigation to header elements ----------
+  // ---------- Header navigation ----------
   document.querySelector('.site-logo').addEventListener('click', (e) => {
     e.preventDefault();
     navigateTo('/');
