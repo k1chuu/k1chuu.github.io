@@ -1,0 +1,737 @@
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #141414;
+  --text: #f0f0f0;
+  --text-muted: #909090;
+  --accent: #7a2021;
+  --font-heading: 'Special Elite', cursive;
+  --font-body: 'Inter', sans-serif;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --max-width: 650px;
+  /* Exact reading width of reference */
+  --transition: 0.25s ease;
+}
+
+html {
+  font-size: 18px;
+  /* Reference uses a comfortable 18px */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Noise texture for that gritty noir feel */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== HEADER (Mirrors reference) ========== */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 3rem;
+}
+
+.site-logo {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 2px;
+  transition: color var(--transition);
+}
+
+.site-logo:hover {
+  color: var(--accent);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.8rem;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  font-size: 1.4rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+}
+
+/* ========== FOOTER (Mirrors reference) ========== */
+.site-footer {
+  text-align: center;
+  padding: 2.5rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer-web {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 5 L30 15 L40 10 L35 20 L45 25 L35 30 L40 40 L30 35 L25 45 L20 35 L10 40 L15 30 L5 25 L15 20 L10 10 L20 15 Z" fill="none" stroke="%237a2021" stroke-width="1.5"/></svg>') center/contain no-repeat;
+  opacity: 0.6;
+}
+
+/* ========== BLOG LIST (Exactly like reference) ========== */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.post-card {
+  cursor: pointer;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.post-card:hover {
+  transform: translateX(4px);
+  border-bottom-color: var(--accent);
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-date {
+  font-weight: 500;
+}
+
+.card-read-time {
+  font-style: italic;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-tag {
+  background: rgba(122, 32, 33, 0.15);
+  color: var(--accent);
+  padding: 0.15rem 0.6rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.card-excerpt {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 0.6rem;
+}
+
+/* ========== SINGLE POST (Exactly like reference) ========== */
+.single-post {
+  /* The main content is already constrained by container */
+}
+
+.post-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.post-header .post-title {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.post-header .post-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.post-content {
+  font-size: 1rem;
+}
+
+/* Typography within post content */
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+  font-family: var(--font-heading);
+  margin-top: 2.2em;
+  margin-bottom: 0.8em;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+}
+
+.post-content h1 {
+  font-size: 2rem;
+}
+
+.post-content h2 {
+  font-size: 1.6rem;
+}
+
+.post-content h3 {
+  font-size: 1.3rem;
+}
+
+.post-content p {
+  margin-bottom: 1.6em;
+}
+
+.post-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition);
+}
+
+.post-content a:hover {
+  opacity: 0.7;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem auto;
+  border: 1px solid var(--border-color);
+}
+
+.post-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.post-content code {
+  background: var(--bg-card);
+  padding: 0.2em 0.5em;
+  border-radius: 2px;
+  font-size: 0.9em;
+}
+
+.post-content pre {
+  background: var(--bg-card);
+  padding: 1.2rem;
+  overflow-x: auto;
+  margin-bottom: 1.6em;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 3rem;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--text-muted);
+  padding: 0.5rem 1.2rem;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.back-button:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ========== ABOUT PAGE ========== */
+.about-section {
+  text-align: center;
+}
+
+.about-section .post-content h1 {
+  font-size: 2.8rem;
+}
+
+/* ========== LOADING / STATES ========== */
+.loading,
+.error {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+
+.error {
+  color: var(--accent);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+
+  /* -------- Header becomes position:relative so the nav can anchor correctly -------- */
+  .site-header {
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  /* -------- Default state: hide nav, show toggle button -------- */
+  .site-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    /* right below the header */
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    gap: 1rem;
+    z-index: 20;
+    margin-top: 0.5rem;
+    /* a little breathing room */
+  }
+
+  .site-nav.open {
+    display: flex;
+  }
+
+  /* -------- Toggle button becomes visible and sits nicely to the right -------- */
+  .nav-toggle {
+    display: inline-block;
+    margin-left: auto;
+    /* push it to the right */
+    font-size: 1.6rem;
+    padding: 0.3rem 0.7rem;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text);
+    cursor: pointer;
+    order: 2;
+    /* keep it after the logo on small screens */
+  }
+
+  /* -------- Nav links inside the dropdown -------- */
+  .site-nav .nav-link {
+    font-size: 1rem;
+    padding: 0.3rem 0;
+    text-align: center;
+    border-bottom: none;
+  }
+
+  .site-nav .nav-link:hover,
+  .site-nav .nav-link.active {
+    border-bottom: none;
+    background: rgba(122, 32, 33, 0.1);
+  }
+
+  /* reduce massive headings a bit */
+  .card-title {
+    font-size: 1.6rem;
+  }
+
+  .post-header .post-title {
+    font-size: 2rem;
+  }
+}
+
+/* ========== FILTER BAR (Search + Tags) ========== */
+.filter-bar {
+  margin-bottom: 2.5rem;
+}
+
+.search-bar {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 0.8rem 1.2rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+  margin-bottom: 1.2rem;
+}
+
+.search-bar::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.search-bar:focus {
+  border-color: var(--accent);
+  background: #1a1a1a;
+}
+
+.tag-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tag-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+  transition: all var(--transition);
+}
+
+.tag-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tag-btn.active {
+  background: rgba(122, 32, 33, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.results-info {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-heading);
+  /* <-- add this line */
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+/* ========== IMPROVED SEARCH BAR ========== */
+.search-bar {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 0.8rem 1.2rem 0.8rem 2.8rem;
+  /* left padding for icon */
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23909090' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.8rem center;
+  background-size: 1.2rem;
+}
+
+.search-bar::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.search-bar:focus {
+  border-color: var(--accent);
+  background-color: #1a1a1a;
+  box-shadow: 0 0 8px rgba(122, 32, 33, 0.15);
+}
+
+/* Optional: remove default search clear button in WebKit for cleaner look */
+.search-bar::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  background: var(--text-muted);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 6L6 18M6 6l12 12' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");
+  mask-size: contain;
+  cursor: pointer;
+}
+
+/* ========== FOOTER SOCIAL LINKS ========== */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  color: var(--text-muted);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.social-icon:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.social-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.card-tag {
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.card-tag:hover {
+  background: rgba(122, 32, 33, 0.3);
+  color: var(--text);
+}
+
+/* ========== COMPACT POST CARDS ========== */
+.post-card {
+  padding: 1.2rem 1rem;
+  /* was 1.8rem */
+  margin-bottom: 1.2rem;
+  /* previously no margin, but now reduces overall gap */
+}
+
+.card-title {
+  font-size: 1.5rem;
+  /* down from 1.9rem */
+  margin-bottom: 0.2rem;
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  /* down from 0.9rem */
+  gap: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-excerpt {
+  font-size: 0.9rem;
+  /* down from 0.95rem */
+  margin-top: 0.3rem;
+}
+
+/* Reduce gap between posts on blog list */
+.post-list {
+  gap: 1.5rem;
+  /* was 2.5rem */
+}
+
+/* Slim, understated “View All” link */
+.view-all-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  /* minimal vertical padding */
+  border: none;
+  /* remove the border */
+  color: var(--text-muted);
+  background: none;
+  transition: color var(--transition);
+  text-transform: none;
+  /* keep natural case */
+  letter-spacing: normal;
+}
+
+.view-all-link:hover {
+  color: var(--accent);
+  background: none;
+  border: none;
+}
+
+/* ========== SMALLER POST HEADER ========== */
+.post-header .post-title {
+  font-size: 2rem;
+  /* down from 2.8rem */
+  margin-bottom: 0.5rem;
+}
+
+.post-header .post-meta {
+  font-size: 0.85rem;
+  /* down from 0.95rem */
+  gap: 1rem;
+}
+
+/* Smaller back button on single posts */
+.single-post .back-button {
+  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+  margin-top: 2rem;
+  /* optional: reduce gap above it */
+}
+
+.search-bar {
+  padding: 0.5rem 1rem 0.5rem 2.4rem;
+  /* tighter vertical padding */
+  font-size: 0.9rem;
+  /* slightly smaller text */
+  background-size: 1rem;
+  /* make the magnifying glass smaller */
+  background-position: 0.6rem center;
+  /* adjust icon position */
+}
+
+.search-bar {
+  width: auto;
+  /* remove full‑width stretching */
+  max-width: 300px;
+  /* or 280px – adjust to taste */
+  padding: 0.5rem 1.5rem 0.5rem 2.2rem;
+  font-size: 0.9rem;
+  border-radius: 50px;
+  /* pill shape */
+  background-size: 1rem;
+  background-position: 0.7rem center;
+  outline: none;
+}
+
+/* Optional: center the entire filter bar on the page */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* or center – try 'center' if you want it centered */
+}
+
+.about-section .back-button {
+  font-size: 0.8rem;
+  /* match the single‑post back link */
+  padding: 0.4rem 1rem;
+  margin-top: 2rem;
+}
+
+.view-all-link {
+  font-size: 0.8rem;
+  padding: 0.4rem 1.2rem;
+  display: inline-block;
+  border: 1px solid var(--text-muted);
+  /* same border style as back buttons */
+  color: var(--text);
+  background: none;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  text-transform: none;
+  letter-spacing: normal;
+  margin-top: 1.5rem;
+}
+
+.view-all-link:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.about-section {
+  text-align: left;
+  /* ← add this */
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Left-align the single post header */
+.post-header {
+  text-align: left;
+}
+
+.post-header .post-title {
+  margin-bottom: 0.3rem;
+}
+
+.post-content img {
+  max-width: 70%;
+  /* reduces from 100% – adjust as you like */
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  /* keeps them centered with comfortable spacing */
+}

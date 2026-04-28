@@ -1,0 +1,1 @@
+Hey there! I'm Kishore AKA k1chuu. As a Cyber Detective and Security Analyst, I spend my time hunting evasive threats while actively exploring the creative frontiers of Generative AI. I'm deeply interested in the evolution of Gen-AI from building intelligent agents and optimizing RAG pipelines to understanding how these transformative technologies can reshape our digital future

@@ -1,0 +1,44 @@
+{
+  "blogTitle": "k1chuu's Log",
+  "authorName": "Kishore",
+  "accentColor": "#7a2021",
+  "navLinks": [
+    {
+      "text": "Home",
+      "url": "#home"
+    },
+    {
+      "text": "Blog",
+      "url": "#blog"
+    },
+    {
+      "text": "About",
+      "url": "#about"
+    }
+  ],
+  "posts": [
+    {
+      "slug": "fake-courier-app",
+      "title": "A Fake Courier App Almost Compromised My Friend’s PhonePe",
+      "date": "2026-02-14",
+      "readTime": "4 min read",
+      "tags": [
+        "#tutorials",
+        "#social-engineering"
+      ],
+      "excerpt": "“A friend fell for a courier‑based WhatsApp scam, installed a malicious APK, and had her PhonePe account compromised. This is how the attack worked, and how we fixed."
+    },
+    {
+      "slug": "jailbreaking-deepseek",
+      "title": "Jailbreaking Deepseek: The Tom and Jerry Method",
+      "date": "2026-03-10",
+      "readTime": "2 min read",
+      "tags": [
+        "#social-engineering",
+        "#LLM-security",
+        "#tutorials"
+      ],
+      "excerpt": "Jailbreaking an LLM involves crafting a prompt that tricks the model into ignoring its safety guidelines."
+    }
+  ]
+}
