@@ -8,6 +8,6 @@ Personal blog and portfolio for security research and open-source projects.
 ## Links
 
 - **Website :** [k1chuu.github.io](https://k1chuu.github.io)
-- **GitHub :** [@thewhiteh4t](https://github.com/k1chuu)
-- **LinkedIn :** [lohityapushkar](https://www.linkedin.com/in/kishorevt)
-- **Twitter :** [@thewhiteh4t](https://twitter.com/k1chuu)
+- **GitHub :** [@k1chuu](https://github.com/k1chuu)
+- **LinkedIn :** [Kishore](https://www.linkedin.com/in/kishorevt)
+- **Twitter :** [@k1chuu](https://twitter.com/k1chuu)
