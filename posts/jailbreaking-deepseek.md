@@ -22,6 +22,6 @@ The prompt works by leveraging several psychological and logical bypasses:
 
 By replacing `<term1>` and `<term2>` with components of a restricted topic, the model might inadvertently piece together the restricted information.
 
-![The final generated output showing a successful jailbreak.](/posts/images/tom_jerry.jpg)
+![The final generated output showing a successful jailbreak.](/posts/images/tom_jerry.png)
 
 > **Disclaimer:** This content is for educational and research purposes only. Jailbreaking LLMs can lead to the generation of harmful content, and it is important to report such vulnerabilities to the model developers to help improve AI safety.
