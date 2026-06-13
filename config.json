@@ -1,0 +1,45 @@
+{
+  "blogTitle": "k1chuu",
+  "authorName": "Kishore",
+  "siteUrl": "https://k1chuu.github.io",
+  "description": "Security Analyst, Cyber Detective. Blog covering social engineering, LLM security, and cybersecurity tutorials.",
+  "social": {
+    "twitter": "https://twitter.com/k1chuu",
+    "github": "https://github.com/k1chuu",
+    "email": "pingkishore@proton.me"
+  },
+  "posts": [
+    {
+      "slug": "fake-courier-app",
+      "title": "A Fake Courier App Almost Compromised My Friend's PhonePe",
+      "date": "2026-02-14",
+      "readTime": "4 min read",
+      "tags": [
+        "#tutorials",
+        "#social-engineering"
+      ]
+    },
+    {
+      "slug": "jailbreaking-deepseek",
+      "title": "Jailbreaking Deepseek: The Tom and Jerry Method",
+      "date": "2026-03-10",
+      "readTime": "2 min read",
+      "tags": [
+        "#social-engineering",
+        "#LLM-security",
+        "#tutorials"
+      ]
+    },
+    {
+       "slug": "daily-arsenal",
+      "title": "The Daily Arsenal",
+      "date": "2026-04-09",
+      "readTime": "2 min read",
+      "tags": [
+        "#threat-intel",
+        "#blueteam",
+        "#tutorials"
+      ]
+    }
+  ]
+}
