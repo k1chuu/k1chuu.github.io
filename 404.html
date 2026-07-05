@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — k1chuu</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42.4 36'%3E%3Cpath fill='%23ffffff' d='M25.8,13.8h2.8v5.5h-2.8v-5.5ZM13.8,16.6v2.8h2.8v-5.5h-2.8v2.8ZM32.2,0v2.8h-2.8V0h2.8ZM26.7,5.5h2.8v-2.8h-2.8v2.8ZM21.2,5.5h-5.5v2.8h11.1v-2.8h-5.5ZM12.8,2.8v2.8h2.8v-2.8h-2.8ZM10.1,0v2.8h2.8V0h-2.8ZM7.3,5.5v5.5h2.8V2.8h-2.8v2.8ZM4.5,13.8v2.8H0v2.8h2.8v2.8H0v2.8h2.8v11.1h2.8v-8.3h5.5v-2.8h-5.5v-8.3h1.9v-5.5h-2.9v2.8ZM35,5.5v-2.8h-2.8v8.3h2.8v-5.5ZM42.4,19.4v-2.8h-4.7v-5.5h-2.8v5.5h1.9v8.3h-5.5v2.8h5.5v8.3h2.8v-11.1h2.8v-2.8h-2.8v-2.8h2.8Z'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!--
+      =====================================================================
+      SPA rescue redirect — runs synchronously in <head>, BEFORE <body>
+      is parsed/painted. This is the fix for the "first 404 then post"
+      flash users saw when opening /post/<slug> directly.
+
+      Why this exists:
+        GitHub Pages is a static host. It has no file at /post/<slug>,
+        so it returns HTTP 404 and serves this file. We store the
+        originally requested URL (path + search + hash) in sessionStorage
+        and instantly bounce to "/", where index.html + script.js pick
+        it up via history.replaceState() and let the SPA router render
+        the correct view.
+
+      Why instant (no setTimeout):
+        The old version waited 2000ms so the user could "see the 404".
+        That is exactly the visible flash we want to eliminate. With the
+        script in <head>, the navigation to "/" is queued before the
+        browser paints a single pixel of the 404 body.
+
+      Why location.replace() (not href=):
+        replace() does NOT add a history entry, so the Back button
+        skips the 404 page and goes to whatever was before it.
+      =====================================================================
+    -->
+    <script>
+        (function () {
+            try {
+                var target =
+                    window.location.pathname +
+                    window.location.search +
+                    window.location.hash;
+                sessionStorage.setItem('redirect', target);
+            } catch (e) {
+                // sessionStorage may be blocked (private mode, sandboxed
+                // iframe, etc.). Fall through to the visible 404 body.
+            }
+            window.location.replace('/');
+        })();
+    </script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #000000;
+            --text: #f5f5f5;
+            --text-muted: #666666;
+            --accent: #ffffff;
+            --font-body: 'IBM Plex Mono', monospace;
+            --font-logo: 'Share Tech Mono', monospace;
+            --border-color: #222222;
+            --transition: 0.25s ease;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            -webkit-font-smoothing: antialiased;
+        }
+        .error-page {
+            text-align: center;
+            max-width: 420px;
+        }
+        .error-code {
+            font-family: var(--font-logo);
+            font-size: 6rem;
+            letter-spacing: 8px;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        .error-message {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .error-home {
+            display: inline-block;
+            color: var(--text);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.5rem;
+            transition: border-color var(--transition), background var(--transition);
+        }
+        .error-home:hover {
+            border-color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+        }
+        @media (max-width: 480px) {
+            .error-code { font-size: 4rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+      Visible 404 fallback.
+      On a JS-enabled browser the <head> script has already navigated to
+      "/" before this body is ever parsed, so the user never sees this
+      markup. It only renders if JavaScript is disabled (via <noscript>).
+    -->
+    <noscript>
+        <div class="error-page">
+            <div class="error-code">404</div>
+            <p class="error-message">
+                This page doesn't exist or has been moved.<br>
+                JavaScript is required to navigate this site.
+            </p>
+            <a href="/" class="error-home">&larr; Go home</a>
+        </div>
+    </noscript>
+</body>
+
+</html>
